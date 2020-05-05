@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">RatingChGK</string>
+    <string name="app_name">Рейтинг ЧГК</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello Blank fragment</string>
+    <string name="players">Игроки</string>
+    <string name="teams">Команды</string>
 </resources>

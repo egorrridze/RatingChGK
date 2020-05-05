@@ -1,4 +1,4 @@
-package com.egorrridze.ratingchgk;
+package com.egorrridze.ratingchgk.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.egorrridze.ratingchgk.R;
 
 public class PlayersFragment extends Fragment {
 

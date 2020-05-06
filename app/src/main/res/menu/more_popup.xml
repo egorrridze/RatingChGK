@@ -4,7 +4,6 @@
     <item
         android:id="@+id/item1"
         android:title="Города" />
-
     <item
         android:id="@+id/item2"
         android:title="Площадки" />

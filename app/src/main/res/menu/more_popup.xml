@@ -7,22 +7,7 @@
     <item
         android:id="@+id/item2"
         android:title="Площадки" />
-<<<<<<< HEAD
-
     <item
         android:id="@+id/item3"
         android:title="О приложении" />
-=======
-<<<<<<< HEAD
-
-    <item
-        android:id="@+id/item3"
-        android:title="О приложении" />
-=======
-    <item
-        android:id="@+id/item3"
-        android:title="О приложении" />
-
->>>>>>> develop
->>>>>>> master
 </menu>

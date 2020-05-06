@@ -37,6 +37,9 @@ public class FavoritesFragment extends Fragment {
     }
 
     static class MyTabPagerAdapter extends FragmentPagerAdapter {
+
+        private String tabTitles[] = new String[] {"Игроки", "Команды"};
+
         MyTabPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -44,6 +47,11 @@ public class FavoritesFragment extends Fragment {
         @Override
         public int getCount() {
             return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
         }
 
         @Override

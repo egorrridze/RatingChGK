@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <TextView
+        android:id="@+id/player_position"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:minEms="2"
+        android:layout_marginEnd="10dp"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/player_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:minEms="2"
+        android:text="12345" />
+
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toStartOf="@+id/player_rating"
+        android:layout_toEndOf="@+id/player_position"
+        android:gravity="bottom"
+        android:text="Name Surname" />
+
+    <TextView
+        android:id="@+id/player_team"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_toStartOf="@+id/player_rating"
+        android:layout_toEndOf="@+id/player_position"
+        android:layout_alignParentBottom="true"
+        android:gravity="top"
+        android:layout_marginTop="8dp"
+        android:text="TextView" />
+
+
+</RelativeLayout>

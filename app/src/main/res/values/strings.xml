@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">Рейтинг ЧГК</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello Blank fragment</string>
     <string name="players">Игроки</string>
     <string name="teams">Команды</string>
+    
+    <string-array name="players">
+        <item>Иванов</item>
+        <item>Сидоров</item>
+        <item>Беляев</item>
+        <item>Кузьмин</item>
+    </string-array>
+
+    <string-array name="teams">
+        <item>Команда Иванова</item>
+        <item>Команда Сидорова</item>
+        <item>Великолепный план</item>
+        <item>Команда Кузьмина</item>
+    </string-array>
 </resources>

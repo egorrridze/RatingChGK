@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.egorrridze.ratingchgk.R;
@@ -34,36 +32,5 @@ public class FavoritesFragment extends Fragment {
         // Display a tab for each Fragment displayed in ViewPager.
         TabLayout tabLayout = getView().findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    static class MyTabPagerAdapter extends FragmentPagerAdapter {
-
-        private String tabTitles[] = new String[] {"Игроки", "Команды"};
-
-        MyTabPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabTitles[position];
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch(position) {
-                case 0:
-                    return new FavPlayersTab();
-                case 1:
-                    return new FavTeamsTab();
-                default:
-                    return null;
-            }
-        }
     }
 }

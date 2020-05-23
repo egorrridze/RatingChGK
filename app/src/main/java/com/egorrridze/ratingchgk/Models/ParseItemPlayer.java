@@ -1,19 +1,21 @@
 package com.egorrridze.ratingchgk.Models;
 
-public class ParseItem {
+public class ParseItemPlayer {
     private String player_position;
     private String player_name;
     private String player_team;
     private String player_rating;
+    private String player_url;
 
-    public ParseItem() {
+    public ParseItemPlayer() {
     }
 
-    public ParseItem(String player_position, String player_name, String player_team, String player_rating) {
+    public ParseItemPlayer(String player_position, String player_name, String player_team, String player_rating, String player_url) {
         this.player_position = player_position;
         this.player_name = player_name;
         this.player_team = player_team;
         this.player_rating = player_rating;
+        this.player_url = player_url;
     }
 
     public String getPlayer_position() {
@@ -46,5 +48,13 @@ public class ParseItem {
 
     public void setPlayer_rating(String player_rating) {
         this.player_rating = player_rating;
+    }
+
+    public String getPlayer_url() {
+        return player_url;
+    }
+
+    public void setPlayer_url(String player_url) {
+        this.player_url = player_url;
     }
 }

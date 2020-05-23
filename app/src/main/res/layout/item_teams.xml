@@ -5,7 +5,7 @@
     android:layout_height="72dp">
 
     <TextView
-        android:id="@+id/player_position"
+        android:id="@+id/team_position"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -16,7 +16,7 @@
         android:text="1" />
 
     <TextView
-        android:id="@+id/player_rating"
+        android:id="@+id/team_rating"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -27,21 +27,21 @@
         android:text="12345" />
 
     <TextView
-        android:id="@+id/player_name"
+        android:id="@+id/team_name"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginBottom="8dp"
-        android:layout_toStartOf="@id/player_rating"
-        android:layout_toEndOf="@id/player_position"
+        android:layout_toStartOf="@+id/team_rating"
+        android:layout_toEndOf="@+id/team_position"
         android:gravity="bottom"
         android:text="Name Surname" />
 
     <TextView
-        android:id="@+id/player_team"
+        android:id="@+id/team_city"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_toStartOf="@id/player_rating"
-        android:layout_toEndOf="@id/player_position"
+        android:layout_toStartOf="@+id/team_rating"
+        android:layout_toEndOf="@+id/team_position"
         android:layout_alignParentBottom="true"
         android:gravity="top"
         android:layout_marginTop="8dp"

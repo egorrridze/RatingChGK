@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.egorrridze.ratingchgk.Adapters.ParsePlayerAdapter;
-import com.egorrridze.ratingchgk.Models.ParseItemPlayer;
+import com.egorrridze.ratingchgk.Adapters.ParsePlayerPageAdapter;
+import com.egorrridze.ratingchgk.Models.ParseItemPlayerPage;
 import com.egorrridze.ratingchgk.R;
 
 import org.jsoup.Jsoup;
@@ -27,24 +28,30 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlayersFragment extends Fragment {
+public class PlayerPageFragment extends Fragment {
 
+    private TextView player_name;
+    private TextView player_team;
     private RecyclerView recyclerView;
-    private ParsePlayerAdapter adapter;
-    private ArrayList<ParseItemPlayer> parseItems = new ArrayList<>();
+    private ParsePlayerPageAdapter adapter;
     private ProgressBar progressBar;
+    private ArrayList<ParseItemPlayerPage> parseItems = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_players, container, false);
+        View view =  inflater.inflate(R.layout.fragment_player_page, container, false);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_players);
+        player_name = (TextView) view.findViewById(R.id.playerPage_name);
+        player_team = (TextView) view.findViewById(R.id.playerPage_team);
+        player_name.setText(getArguments().getString("player_name"));
+        player_team.setText(getArguments().getString("player_team"));
 
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_playersTournaments);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ParsePlayerAdapter(parseItems, getActivity());
+        adapter = new ParsePlayerPageAdapter(parseItems, getActivity());
         recyclerView.setAdapter(adapter);
 
         Content content = new Content();
@@ -78,25 +85,32 @@ public class PlayersFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                String url = "https://rating.chgk.info/players.php?page=1";
+                String baseUrl = "https://rating.chgk.info";
+                String detailUrl = getArguments().getString("player_url");
+                String url = baseUrl + detailUrl;
                 Document table = Jsoup.connect(url).get();
                 Elements rows = table.select("tr");
-                int size = rows.size();
-                for (int i = 2; i < size; i++) {
-                    Element row = rows.get((i));  // по номеру индекса получаем строку
-                    Elements cols = row.select("td"); // разбиваем полученную строку по тегу  на столбы
-                    String player_position = cols.get(1).text();
-                    String player_name = cols.get(7).text();
-                    String player_team = cols.get(9).text();
-                    String player_rating = cols.get(3).text();
-                    String player_url = cols.get(7).select("a[href]").attr("href");
-                    parseItems.add(new ParseItemPlayer(player_position, player_name, player_team, player_rating, player_url));
-                    Log.d("items", "pos: " + player_position + " . name: " + player_name + " . team: " + player_team + " . rating" + player_rating);
+                for (int i = 25; i < rows.size(); i++) {
+                    Element row = rows.get((i));
+                    Elements cols = row.select("td");
+                    if (cols.size() == 1)
+                    {
+                        // номер сезона
+                    }
+                    else {
+                        String player_tournament_name = cols.get(2).text();
+                        String player_tournament_date = cols.get(4).text();
+                        String player_tournament_result = cols.get(8).text();
+                        parseItems.add(new ParseItemPlayerPage( player_tournament_name, player_tournament_date, player_tournament_result));
+                        Log.d("items", "tourn name: " + player_tournament_name + ". tourn date: " + player_tournament_date + ". tourn result: " + player_tournament_result);
+                    }
                 }
+
             } catch (IOException e){
                 e.printStackTrace();;
             }
             return null;
         }
     }
+
 }

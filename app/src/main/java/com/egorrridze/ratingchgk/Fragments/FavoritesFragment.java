@@ -29,7 +29,6 @@ public class FavoritesFragment extends Fragment {
         ViewPager viewPager = getView().findViewById(R.id.viewpager);
         viewPager.setAdapter(tabPager);
 
-        // Display a tab for each Fragment displayed in ViewPager.
         TabLayout tabLayout = getView().findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }

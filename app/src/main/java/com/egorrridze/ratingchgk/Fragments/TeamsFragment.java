@@ -1,5 +1,9 @@
 package com.egorrridze.ratingchgk.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.egorrridze.ratingchgk.Adapters.ParseTeamAdapter;
 import com.egorrridze.ratingchgk.Models.ParseItemTeam;
 import com.egorrridze.ratingchgk.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,6 +31,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class TeamsFragment extends Fragment {
@@ -39,11 +46,14 @@ public class TeamsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_teams, container, false);
 
+        if (!hasConnection(getActivity())) loadData();
+
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_teams);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         adapter = new ParseTeamAdapter(parseItems, getActivity());
         recyclerView.setAdapter(adapter);
 
@@ -51,6 +61,31 @@ public class TeamsFragment extends Fragment {
         content.execute();
 
         return view;
+    }
+
+    private void saveData(){
+        try {
+            SharedPreferences prefs = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(parseItems);
+            editor.putString("teamsList", json);
+            editor.apply();
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void loadData(){
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString("teamsList", null);
+        Type type = new TypeToken<ArrayList<ParseItemTeam>>() {}.getType();
+        parseItems = gson.fromJson(json, type);
+        if (parseItems == null){
+            parseItems = new ArrayList<>();
+        }
     }
 
     private class Content extends AsyncTask<Void, Void, Void>
@@ -67,6 +102,7 @@ public class TeamsFragment extends Fragment {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
             //progressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+            saveData();
             adapter.notifyDataSetChanged();
         }
 
@@ -97,5 +133,26 @@ public class TeamsFragment extends Fragment {
             }
             return null;
         }
+    }
+
+    public static boolean hasConnection(final Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        return false;
     }
 }

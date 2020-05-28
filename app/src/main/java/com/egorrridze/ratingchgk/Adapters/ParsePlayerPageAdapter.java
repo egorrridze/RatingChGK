@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.egorrridze.ratingchgk.Models.ParseItemPlayer;
 import com.egorrridze.ratingchgk.Models.ParseItemPlayerPage;
 import com.egorrridze.ratingchgk.R;
 

@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.egorrridze.ratingchgk.Fragments.PlayerPageFragment;
-import com.egorrridze.ratingchgk.Interfaces.FragmentCommunication;
 import com.egorrridze.ratingchgk.Models.ParseItemPlayer;
 import com.egorrridze.ratingchgk.R;
 
@@ -23,20 +22,16 @@ public class ParsePlayerAdapter extends RecyclerView.Adapter<ParsePlayerAdapter.
 
     private ArrayList<ParseItemPlayer> parseItems;
     private Context context;
-    //private FragmentCommunication Communicator;
-
 
     public ParsePlayerAdapter(ArrayList<ParseItemPlayer> parseItems, Context context) {   //конструктор
         this.parseItems = parseItems;
         this.context = context;
-        //Communicator = communication;
     }
 
     @NonNull
     @Override
     public ParsePlayerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_players, parent, false);
-        //ParsePlayerAdapter.ViewHolder holder = new ParsePlayerAdapter.ViewHolder(view, Communicator);
         return new ViewHolder(view);
     }
 

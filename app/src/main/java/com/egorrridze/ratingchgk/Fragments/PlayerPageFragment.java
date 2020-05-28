@@ -90,27 +90,30 @@ public class PlayerPageFragment extends Fragment {
                 String url = baseUrl + detailUrl;
                 Document table = Jsoup.connect(url).get();
                 Elements rows = table.select("tr");
-                for (int i = 25; i < rows.size(); i++) {
+                boolean head_of_table = false;
+                for (int i = 1; i < rows.size(); i++) {
                     Element row = rows.get((i));
                     Elements cols = row.select("td");
                     if (cols.size() == 1)
                     {
                         // номер сезона
                     }
-                    else {
-                        String player_tournament_name = cols.get(2).text();
-                        String player_tournament_date = cols.get(4).text();
-                        String player_tournament_result = cols.get(8).text();
-                        parseItems.add(new ParseItemPlayerPage( player_tournament_name, player_tournament_date, player_tournament_result));
-                        Log.d("items", "tourn name: " + player_tournament_name + ". tourn date: " + player_tournament_date + ". tourn result: " + player_tournament_result);
+                    else if (cols.size() == 12)
+                    {
+                        if (head_of_table) {
+                            String player_tournament_name = cols.get(2).text();
+                            String player_tournament_date = cols.get(4).text();
+                            String player_tournament_result = cols.get(8).text();
+                            parseItems.add(new ParseItemPlayerPage(player_tournament_name, player_tournament_date, player_tournament_result));
+                            Log.d("items", "tourn name: " + player_tournament_name + ". tourn date: " + player_tournament_date + ". tourn result: " + player_tournament_result);
+                        }
+                        head_of_table = true;
                     }
                 }
-
             } catch (IOException e){
                 e.printStackTrace();;
             }
             return null;
         }
     }
-
 }

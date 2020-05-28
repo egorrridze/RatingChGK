@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // функция обработкаи нажатий на элементы bottom_nav и вызов соответствующих фрагментов
+    // функция обработки нажатий на элементы bottom_nav и вызов соответствующих фрагментов
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

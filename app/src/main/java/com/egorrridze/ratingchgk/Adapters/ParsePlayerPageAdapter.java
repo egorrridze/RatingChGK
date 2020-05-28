@@ -1,6 +1,7 @@
 package com.egorrridze.ratingchgk.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ParsePlayerPageAdapter extends RecyclerView.Adapter<ParsePlayerPage
 
     @Override
     public void onBindViewHolder(@NonNull ParsePlayerPageAdapter.ViewHolder holder, int position) {
+        holder.itemView.setBackgroundColor(Color.parseColor(position % 2 == 0 ? "#F4F0CB" : "#DED29E"));
         ParseItemPlayerPage parseItem = parseItems.get(position);
         holder.player_tournament_name.setText(parseItem.getPlayer_tournament_name());
         holder.player_tournament_date.setText(parseItem.getPlayer_tournament_date());

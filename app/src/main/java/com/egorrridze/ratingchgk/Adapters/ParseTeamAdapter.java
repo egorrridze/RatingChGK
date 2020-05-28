@@ -1,6 +1,7 @@
 package com.egorrridze.ratingchgk.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ParseTeamAdapter extends RecyclerView.Adapter<ParseTeamAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ParseTeamAdapter.ViewHolder holder, int position) {
+        holder.itemView.setBackgroundColor(Color.parseColor(position % 2 == 0 ? "#F4F0CB" : "#DED29E"));
         ParseItemTeam parseItemTeam = parseItems.get(position);
         holder.team_position.setText(parseItemTeam.getTeam_position());
         holder.team_rating.setText(parseItemTeam.getTeam_rating());

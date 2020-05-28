@@ -1,6 +1,7 @@
 package com.egorrridze.ratingchgk.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class ParsePlayerAdapter extends RecyclerView.Adapter<ParsePlayerAdapter.
         holder.player_rating.setText(parseItemPlayer.getPlayer_rating());
         holder.player_name.setText(parseItemPlayer.getPlayer_name());
         holder.player_team.setText(parseItemPlayer.getPlayer_team());
+        holder.itemView.setBackgroundColor(Color.parseColor(position % 2 == 0 ? "#F4F0CB" : "#DED29E"));
     }
 
     @Override

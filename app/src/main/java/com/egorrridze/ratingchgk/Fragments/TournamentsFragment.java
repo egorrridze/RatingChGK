@@ -19,12 +19,19 @@ import com.egorrridze.ratingchgk.Adapters.ParseTournamentAdapter;
 import com.egorrridze.ratingchgk.Models.ParseItemTournament;
 import com.egorrridze.ratingchgk.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TournamentsFragment extends Fragment {
@@ -79,7 +86,7 @@ public class TournamentsFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            try {
+            /*try {
                 String html = "https://rating.chgk.info/tournaments";
                 Document table = Jsoup.connect(html).get();
                 Elements rows = table.select("tr");
@@ -105,7 +112,44 @@ public class TournamentsFragment extends Fragment {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }*/
+            try {
+                LocalDate date = LocalDate.now();
+
+                URL url = new URL("http://api.rating.chgk.net/tournaments?page=1&dateStart%5Bafter%5D=" + date.minusMonths(1) + "&dateEnd%5Bbefore%5D=" + date.plusMonths(1));
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                http.setRequestProperty("accept", "application/json");
+
+                //http.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(http.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                JSONArray jsonTournaments = new JSONArray(content.toString());
+                for (int i = 0; i < jsonTournaments.length(); i++) {
+                    String tournament_name = jsonTournaments.getJSONObject(i).get("name").toString();
+                    String tournament_type = jsonTournaments.getJSONObject(i).getJSONObject("type").get("name").toString().substring(0, 1);
+
+                    String d = jsonTournaments.getJSONObject(i).get("dateEnd").toString();
+                    /*приведение к типу LocalDate (кажется, лишнее)
+                    LocalDate date0 = LocalDate.of(Integer.parseInt(d.substring(0, 4)), Integer.parseInt(d.substring(5, 7)), Integer.parseInt(d.substring(8, 10)));
+                    String tournament_date = date0.getDayOfMonth() + "." + date0.getMonthValue() + "." + date0.getYear();*/
+                    String tournament_date = d.substring(8, 10) + "." + d.substring(5, 7) + "." + d.substring(0, 4);
+                    parseItems.add(new ParseItemTournament(tournament_name, tournament_date, tournament_type));
+                    Log.d("items", "name: " + tournament_name + " date: " + tournament_date + " type: " + tournament_type);
+
+                }
+                http.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
             return null;
         }
     }
